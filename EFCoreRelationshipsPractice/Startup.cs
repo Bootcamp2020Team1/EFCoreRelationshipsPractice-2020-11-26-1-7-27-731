@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace EFCoreRelationshipsPractice
 {
@@ -28,9 +29,9 @@ namespace EFCoreRelationshipsPractice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddControllers().AddNewtonsoftJson(option =>
-            //    option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            //);
+            services.AddControllers().AddNewtonsoftJson(option =>
+                option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddDbContext<CompanyDbContext>(options =>
@@ -52,9 +53,7 @@ namespace EFCoreRelationshipsPractice
             {
                 using (var context = scope.ServiceProvider.GetService<CompanyDbContext>())
                 {
-                    //context.Database.EnsureDeleted();
-                    //context.Database.EnsureCreated();
-                    context.Database.Migrate();
+                    //context.Database.Migrate();
                 }
             }
 
