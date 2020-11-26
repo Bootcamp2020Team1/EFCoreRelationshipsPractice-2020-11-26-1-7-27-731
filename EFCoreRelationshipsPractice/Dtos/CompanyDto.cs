@@ -4,6 +4,11 @@ namespace EFCoreRelationshipsPractice.Dtos
 {
     public class CompanyDto
     {
+        public CompanyDto(Entities.CompanyEntity c)
+        {
+            Name = c.Name;
+        }
+
         public CompanyDto()
         {
         }
