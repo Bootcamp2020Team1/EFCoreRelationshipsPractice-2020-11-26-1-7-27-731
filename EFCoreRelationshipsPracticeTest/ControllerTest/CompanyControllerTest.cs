@@ -178,6 +178,43 @@ namespace EFCoreRelationshipsPracticeTest
         }
 
         [Fact]
+        public async Task Should_get_company_by_id_via_service()
+        {
+            var scope = Factory.Services.CreateScope();
+            var scopedServices = scope.ServiceProvider;
+            CompanyDbContext context = scopedServices.GetRequiredService<CompanyDbContext>();
+            context.Companies.RemoveRange(context.Companies);
+            context.SaveChanges();
+
+            CompanyDto companyDto = new CompanyDto();
+            companyDto.Name = "IBM";
+            companyDto.Employees = new List<EmployeeDto>()
+                {
+                    new EmployeeDto()
+                    {
+                        Name = "Tom",
+                        Age = 19,
+                    },
+                };
+
+            companyDto.Profile = new ProfileDto()
+            {
+                RegisteredCapital = 100010,
+                CertId = "100",
+            };
+
+            CompanyService companyService = new CompanyService(context);
+            var id = await companyService.AddCompany(companyDto);
+            var returnCompany = await companyService.GetById(id);
+
+            Assert.Equal(companyDto.Employees.Count, returnCompany.Employees.Count);
+            Assert.Equal(companyDto.Employees[0].Age, returnCompany.Employees[0].Age);
+            Assert.Equal(companyDto.Employees[0].Name, returnCompany.Employees[0].Name);
+            Assert.Equal(companyDto.Profile.CertId, returnCompany.Profile.CertId);
+            Assert.Equal(companyDto.Profile.RegisteredCapital, returnCompany.Profile.RegisteredCapital);
+        }
+
+        [Fact]
         public async Task Should_create_company_via_service()
         {
             var scope = Factory.Services.CreateScope();
