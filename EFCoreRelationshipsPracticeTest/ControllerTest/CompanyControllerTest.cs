@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using EFCoreRelationshipsPractice;
 using EFCoreRelationshipsPractice.Dtos;
 using EFCoreRelationshipsPractice.Repository;
+using EFCoreRelationshipsPractice.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -135,6 +136,99 @@ namespace EFCoreRelationshipsPracticeTest
             var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
 
             Assert.Equal(2, returnCompanies.Count);
+        }
+
+        [Fact]
+        public async Task Should_create_company_via_service()
+        {
+            var scope = Factory.Services.CreateScope();
+            var scopedServices = scope.ServiceProvider;
+            CompanyDbContext context = scopedServices.GetRequiredService<CompanyDbContext>();
+            context.Companies.RemoveRange(context.Companies);
+            context.SaveChanges();
+
+            CompanyDto companyDto = new CompanyDto();
+            companyDto.Name = "IBM";
+            companyDto.Employees = new List<EmployeeDto>()
+                {
+                    new EmployeeDto()
+                    {
+                        Name = "Tom",
+                        Age = 19,
+                    },
+                };
+
+            companyDto.Profile = new ProfileDto()
+            {
+                RegisteredCapital = 100010,
+                CertId = "100",
+            };
+            Assert.Equal(0, context.Companies.Count());
+            CompanyService companyService = new CompanyService(context);
+            await companyService.AddCompany(companyDto);
+            Assert.Equal(1, context.Companies.Count());
+        }
+
+        [Fact]
+        public async Task Should_create_company_via_service()
+        {
+            var scope = Factory.Services.CreateScope();
+            var scopedServices = scope.ServiceProvider;
+            CompanyDbContext context = scopedServices.GetRequiredService<CompanyDbContext>();
+            context.Companies.RemoveRange(context.Companies);
+            context.SaveChanges();
+
+            CompanyDto companyDto = new CompanyDto();
+            companyDto.Name = "IBM";
+            companyDto.Employees = new List<EmployeeDto>()
+                {
+                    new EmployeeDto()
+                    {
+                        Name = "Tom",
+                        Age = 19,
+                    },
+                };
+
+            companyDto.Profile = new ProfileDto()
+            {
+                RegisteredCapital = 100010,
+                CertId = "100",
+            };
+            Assert.Equal(0, context.Companies.Count());
+            CompanyService companyService = new CompanyService(context);
+            await companyService.AddCompany(companyDto);
+            Assert.Equal(1, context.Companies.Count());
+        }
+
+        [Fact]
+        public async Task Should_create_company_via_service()
+        {
+            var scope = Factory.Services.CreateScope();
+            var scopedServices = scope.ServiceProvider;
+            CompanyDbContext context = scopedServices.GetRequiredService<CompanyDbContext>();
+            context.Companies.RemoveRange(context.Companies);
+            context.SaveChanges();
+
+            CompanyDto companyDto = new CompanyDto();
+            companyDto.Name = "IBM";
+            companyDto.Employees = new List<EmployeeDto>()
+                {
+                    new EmployeeDto()
+                    {
+                        Name = "Tom",
+                        Age = 19,
+                    },
+                };
+
+            companyDto.Profile = new ProfileDto()
+            {
+                RegisteredCapital = 100010,
+                CertId = "100",
+            };
+            Assert.Equal(0, context.Companies.Count());
+            CompanyService companyService = new CompanyService(context);
+            await companyService.AddCompany(companyDto);
+            Assert.Equal(1, context.Companies.Count());
         }
     }
 }
