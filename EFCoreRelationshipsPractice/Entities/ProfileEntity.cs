@@ -1,4 +1,6 @@
-﻿namespace EFCoreRelationshipsPractice.Dtos
+﻿using EFCoreRelationshipsPractice.Dtos;
+
+namespace EFCoreRelationshipsPractice.Entities
 {
     public class ProfileEntity
     {
@@ -6,6 +8,13 @@
         {
         }
 
+        public ProfileEntity(ProfileDto profile)
+        {
+            this.CertId = profile.CertId;
+            this.RegisteredCapital = profile.RegisteredCapital;
+        }
+
+        public int Id { get; set; }
         public int RegisteredCapital { get; set; }
         public string CertId { get; set; }
     }
