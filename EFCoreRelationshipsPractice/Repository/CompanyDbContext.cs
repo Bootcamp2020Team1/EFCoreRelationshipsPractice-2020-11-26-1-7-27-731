@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using EFCoreRelationshipsPractice.Entities;
 namespace EFCoreRelationshipsPractice.Repository
 {
     public class CompanyDbContext : DbContext
@@ -8,5 +8,7 @@ namespace EFCoreRelationshipsPractice.Repository
             : base(options)
         {
         }
+
+        public DbSet<CompanyEntity> Companies { get; set; }
     }
 }
