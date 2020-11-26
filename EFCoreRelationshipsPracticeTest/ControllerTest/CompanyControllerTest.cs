@@ -139,7 +139,7 @@ namespace EFCoreRelationshipsPracticeTest
         }
 
         [Fact]
-        public async Task Should_create_company_via_service()
+        public async Task Should_get_all_company_via_service()
         {
             var scope = Factory.Services.CreateScope();
             var scopedServices = scope.ServiceProvider;
@@ -163,10 +163,18 @@ namespace EFCoreRelationshipsPracticeTest
                 RegisteredCapital = 100010,
                 CertId = "100",
             };
-            Assert.Equal(0, context.Companies.Count());
+
             CompanyService companyService = new CompanyService(context);
             await companyService.AddCompany(companyDto);
-            Assert.Equal(1, context.Companies.Count());
+            var returnCompanies = await companyService.GetAll();
+
+            Assert.Equal(1, returnCompanies.Count());
+            Assert.Equal(1, returnCompanies.Count);
+            Assert.Equal(companyDto.Employees.Count, returnCompanies[0].Employees.Count);
+            Assert.Equal(companyDto.Employees[0].Age, returnCompanies[0].Employees[0].Age);
+            Assert.Equal(companyDto.Employees[0].Name, returnCompanies[0].Employees[0].Name);
+            Assert.Equal(companyDto.Profile.CertId, returnCompanies[0].Profile.CertId);
+            Assert.Equal(companyDto.Profile.RegisteredCapital, returnCompanies[0].Profile.RegisteredCapital);
         }
 
         [Fact]
@@ -201,7 +209,7 @@ namespace EFCoreRelationshipsPracticeTest
         }
 
         [Fact]
-        public async Task Should_create_company_via_service()
+        public async Task Should_delete_company_via_service()
         {
             var scope = Factory.Services.CreateScope();
             var scopedServices = scope.ServiceProvider;
@@ -225,10 +233,13 @@ namespace EFCoreRelationshipsPracticeTest
                 RegisteredCapital = 100010,
                 CertId = "100",
             };
-            Assert.Equal(0, context.Companies.Count());
+
             CompanyService companyService = new CompanyService(context);
-            await companyService.AddCompany(companyDto);
-            Assert.Equal(1, context.Companies.Count());
+            var id = await companyService.AddCompany(companyDto);
+
+            await companyService.DeleteCompany(id);
+
+            Assert.Equal(0, context.Companies.Count());
         }
     }
 }
