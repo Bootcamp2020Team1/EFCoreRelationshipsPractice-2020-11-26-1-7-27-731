@@ -101,7 +101,7 @@ namespace EFCoreRelationshipsPracticeTest
 
             var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
 
-            Assert.Equal(0, returnCompanies.Count);
+            Assert.Empty(returnCompanies);
         }
 
         [Fact]
@@ -136,35 +136,6 @@ namespace EFCoreRelationshipsPracticeTest
             var returnCompanies = JsonConvert.DeserializeObject<List<CompanyDto>>(body);
 
             Assert.Equal(2, returnCompanies.Count);
-        }
-
-        [Fact]
-        public async Task Should_Delete_Company_Success_Via_Company_Service()
-        {
-            var scope = Factory.Services.CreateScope();
-            var scopedServices = scope.ServiceProvider;
-
-            var context = scopedServices.GetRequiredService<CompanyDbContext>();
-            CompanyDto companyDto = new CompanyDto();
-            companyDto.Name = "IBM";
-            companyDto.Employees = new List<EmployeeDto>()
-            {
-                new EmployeeDto()
-                {
-                    Name = "Tom",
-                    Age = 20
-                }
-            };
-
-            companyDto.Profile = new ProfileDto()
-            {
-                RegisteredCapital = 100010,
-                CertId = "100"
-            };
-
-            CompanyService companyService = new CompanyService(context);
-            await companyService.AddCompany(companyDto);
-            Assert.Equal(1, context.Companies.Count());
         }
     }
 }
