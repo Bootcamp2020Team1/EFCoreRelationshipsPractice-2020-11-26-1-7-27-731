@@ -46,7 +46,7 @@ namespace EFCoreRelationshipsPracticeTest
                 },
             };
 
-            CompanyService companyService = new CompanyService(context);
+            var companyService = new CompanyService(context);
             await companyService.AddCompany(companyDto);
             Assert.Equal(1, context.Companies.Count());
         }
@@ -58,23 +58,25 @@ namespace EFCoreRelationshipsPracticeTest
             var scopedServices = scope.ServiceProvider;
 
             var context = scopedServices.GetRequiredService<CompanyDbContext>();
-            CompanyDto companyDto = new CompanyDto();
-            companyDto.Name = "IBM";
-            companyDto.Employees = new List<EmployeeDto>()
+            var companyDto = new CompanyDto
+            {
+                Name = "IBM",
+                Employees = new List<EmployeeDto>()
             {
                 new EmployeeDto()
                 {
                     Name = "Tom",
                     Age = 20,
                 },
-            };
+            },
 
-            companyDto.Profile = new ProfileDto()
-            {
-                RegisteredCapital = 100010,
-                CertId = "100",
+                Profile = new ProfileDto()
+                {
+                    RegisteredCapital = 100010,
+                    CertId = "100",
+                },
             };
-            CompanyService companyService = new CompanyService(context);
+            var companyService = new CompanyService(context);
             await companyService.AddCompany(companyDto);
             var allCompanies = await companyService.GetAll();
             Assert.Single(allCompanies);
@@ -105,21 +107,23 @@ namespace EFCoreRelationshipsPracticeTest
                     CertId = "100",
                 },
             };
-            var companyDto2 = new CompanyDto();
-            companyDto2.Name = "sab";
-            companyDto2.Employees = new List<EmployeeDto>()
+            var companyDto2 = new CompanyDto
+            {
+                Name = "sab",
+                Employees = new List<EmployeeDto>()
             {
                 new EmployeeDto()
                 {
                     Name = "NewName",
                     Age = 20,
                 },
-            };
+            },
 
-            companyDto2.Profile = new ProfileDto()
-            {
-                RegisteredCapital = 100010,
-                CertId = "100",
+                Profile = new ProfileDto()
+                {
+                    RegisteredCapital = 100010,
+                    CertId = "100",
+                },
             };
             var companyService = new CompanyService(context);
             await companyService.AddCompany(companyDto2);
