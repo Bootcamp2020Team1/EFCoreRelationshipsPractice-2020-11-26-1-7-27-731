@@ -60,6 +60,7 @@ namespace EFCoreRelationshipsPractice.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
+        public CompanyEntity Company { get; set; }
         [ForeignKey("CompanyIdForeignKey")]
         public int CompanyId { get; set; }
     }
