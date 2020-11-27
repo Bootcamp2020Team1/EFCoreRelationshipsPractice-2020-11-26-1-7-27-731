@@ -27,21 +27,23 @@ namespace EFCoreRelationshipsPracticeTest
             var scopedServices = scope.ServiceProvider;
 
             var context = scopedServices.GetRequiredService<CompanyDbContext>();
-            CompanyDto companyDto = new CompanyDto();
-            companyDto.Name = "IBM";
-            companyDto.Employees = new List<EmployeeDto>()
+            var companyDto = new CompanyDto
+            {
+                Name = "IBM",
+                Employees = new List<EmployeeDto>()
             {
                 new EmployeeDto()
                 {
                     Name = "Tom",
-                    Age = 20
-                }
-            };
+                    Age = 20,
+                },
+            },
 
-            companyDto.Profile = new ProfileDto()
-            {
-                RegisteredCapital = 100010,
-                CertId = "100"
+                Profile = new ProfileDto()
+                {
+                    RegisteredCapital = 100010,
+                    CertId = "100",
+                },
             };
 
             CompanyService companyService = new CompanyService(context);
@@ -63,19 +65,19 @@ namespace EFCoreRelationshipsPracticeTest
                 new EmployeeDto()
                 {
                     Name = "Tom",
-                    Age = 20
-                }
+                    Age = 20,
+                },
             };
 
             companyDto.Profile = new ProfileDto()
             {
                 RegisteredCapital = 100010,
-                CertId = "100"
+                CertId = "100",
             };
             CompanyService companyService = new CompanyService(context);
             await companyService.AddCompany(companyDto);
             var allCompanies = await companyService.GetAll();
-            Assert.Equal(1, allCompanies.Count);
+            Assert.Single(allCompanies);
         }
 
         [Fact]
@@ -85,39 +87,41 @@ namespace EFCoreRelationshipsPracticeTest
             var scopedServices = scope.ServiceProvider;
 
             var context = scopedServices.GetRequiredService<CompanyDbContext>();
-            CompanyDto companyDto1 = new CompanyDto();
-            companyDto1.Name = "IBM";
-            companyDto1.Employees = new List<EmployeeDto>()
+            var companyDto1 = new CompanyDto
+            {
+                Name = "IBM",
+                Employees = new List<EmployeeDto>()
             {
                 new EmployeeDto()
                 {
                     Name = "Tom",
-                    Age = 20
-                }
-            };
+                    Age = 20,
+                },
+            },
 
-            companyDto1.Profile = new ProfileDto()
-            {
-                RegisteredCapital = 100010,
-                CertId = "100"
+                Profile = new ProfileDto()
+                {
+                    RegisteredCapital = 100010,
+                    CertId = "100",
+                },
             };
-            CompanyDto companyDto2 = new CompanyDto();
+            var companyDto2 = new CompanyDto();
             companyDto2.Name = "sab";
             companyDto2.Employees = new List<EmployeeDto>()
             {
                 new EmployeeDto()
                 {
                     Name = "NewName",
-                    Age = 20
-                }
+                    Age = 20,
+                },
             };
 
             companyDto2.Profile = new ProfileDto()
             {
                 RegisteredCapital = 100010,
-                CertId = "100"
+                CertId = "100",
             };
-            CompanyService companyService = new CompanyService(context);
+            var companyService = new CompanyService(context);
             await companyService.AddCompany(companyDto2);
             await companyService.AddCompany(companyDto1);
             await companyService.DeleteCompany(1);
