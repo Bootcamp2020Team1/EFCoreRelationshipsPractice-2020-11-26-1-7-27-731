@@ -28,10 +28,6 @@ namespace EFCoreRelationshipsPracticeTest
         [Fact]
         public async Task Should_Create_Company_Success_Via_Company_Service()
         {
-            //var scope = Factory.Services.CreateScope();
-            //var scopedServices = scope.ServiceProvider;
-
-            //var context = scopedServices.GetRequiredService<CompanyDbContext>();
             var companyDto = new CompanyDto
             {
                 Name = "IBM",
@@ -59,10 +55,6 @@ namespace EFCoreRelationshipsPracticeTest
         [Fact]
         public async Task Should_Get_Company_Success_Via_Company_Service()
         {
-            var scope = Factory.Services.CreateScope();
-            var scopedServices = scope.ServiceProvider;
-
-            var context = scopedServices.GetRequiredService<CompanyDbContext>();
             var companyDto = new CompanyDto
             {
                 Name = "IBM",
@@ -90,10 +82,6 @@ namespace EFCoreRelationshipsPracticeTest
         [Fact]
         public async Task Should_Delete_Company_Via_Company_Service()
         {
-            var scope = Factory.Services.CreateScope();
-            var scopedServices = scope.ServiceProvider;
-
-            var context = scopedServices.GetRequiredService<CompanyDbContext>();
             var companyDto1 = new CompanyDto
             {
                 Name = "IBM",
