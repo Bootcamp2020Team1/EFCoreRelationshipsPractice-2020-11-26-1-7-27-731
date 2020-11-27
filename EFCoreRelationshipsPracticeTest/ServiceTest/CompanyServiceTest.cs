@@ -14,6 +14,7 @@ using Xunit;
 
 namespace EFCoreRelationshipsPracticeTest
 {
+    [Collection("IntegrationTest")]
     public class CompanyServiceTest : TestBase
     {
         public CompanyServiceTest(CustomWebApplicationFactory<Startup> factory) : base(factory)
