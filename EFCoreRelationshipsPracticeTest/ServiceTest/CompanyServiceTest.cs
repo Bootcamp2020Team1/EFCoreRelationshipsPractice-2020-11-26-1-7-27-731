@@ -17,17 +17,21 @@ namespace EFCoreRelationshipsPracticeTest
     [Collection("IntegrationTest")]
     public class CompanyServiceTest : TestBase
     {
+        private CompanyDbContext context;
         public CompanyServiceTest(CustomWebApplicationFactory<Startup> factory) : base(factory)
         {
+            var scope = Factory.Services.CreateScope();
+            var scopedServices = scope.ServiceProvider;
+            context = scopedServices.GetRequiredService<CompanyDbContext>();
         }
 
         [Fact]
         public async Task Should_Create_Company_Success_Via_Company_Service()
         {
-            var scope = Factory.Services.CreateScope();
-            var scopedServices = scope.ServiceProvider;
+            //var scope = Factory.Services.CreateScope();
+            //var scopedServices = scope.ServiceProvider;
 
-            var context = scopedServices.GetRequiredService<CompanyDbContext>();
+            //var context = scopedServices.GetRequiredService<CompanyDbContext>();
             var companyDto = new CompanyDto
             {
                 Name = "IBM",
