@@ -22,7 +22,7 @@ namespace EFCoreRelationshipsPractice.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CompanyDto>>> List()
         {
-            var companyDtos = await this.companyService.GetAll();
+            var companyDtos = await companyService.GetAll();
 
             return Ok(companyDtos);
         }
@@ -30,14 +30,14 @@ namespace EFCoreRelationshipsPractice.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CompanyDto>> GetById(int id)
         {
-            var companyDto = await this.companyService.GetById(id);
+            var companyDto = await companyService.GetById(id);
             return Ok(companyDto);
         }
 
         [HttpPost]
         public async Task<ActionResult<CompanyDto>> Add(CompanyDto companyDto)
         {
-            var id = await this.companyService.AddCompany(companyDto);
+            var id = await companyService.AddCompany(companyDto);
 
             return CreatedAtAction(nameof(GetById), new { id = id }, companyDto);
         }
@@ -47,7 +47,7 @@ namespace EFCoreRelationshipsPractice.Controllers
         {
             await companyService.DeleteCompany(id);
 
-            return this.NoContent();
+            return NoContent();
         }
     }
 }
